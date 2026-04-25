@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ni-Yu Tex International — Design to Delivery denim and apparel manufacturing. End-to-end supply chain from Bangalore to the world." />
+  <title>Ni-Yu Tex International — Design to Delivery</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Outfit:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ─── Page Loader ─────────────────────────────── -->
+  <div id="loader" class="loader">
+    <div class="loader__inner">
+      <div class="loader__bar"></div>
+      <span class="loader__text">N · Y · T</span>
+    </div>
+  </div>
+
+  <!-- ─── Custom Cursor ───────────────────────────── -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ─── Navigation ──────────────────────────────── -->
+  <nav class="nav">
+    <a href="#top" class="nav__brand">
+      <span class="nav__brand-mark">N<i>·</i>Y<i>·</i>T</span>
+      <span class="nav__brand-tag">International</span>
+    </a>
+
+    <ul class="nav__links">
+      <li><a href="#collection" data-cursor="hover">Collection</a></li>
+      <li><a href="#about" data-cursor="hover">About</a></li>
+      <li><a href="#services" data-cursor="hover">Services</a></li>
+      <li><a href="#clients" data-cursor="hover">Clients</a></li>
+      <li><a href="#contact" data-cursor="hover">Contact</a></li>
+    </ul>
+
+    <button class="nav__cart" id="cartBtn" data-cursor="hover" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 7Z" />
+        <path d="M9 7V5a3 3 0 0 1 6 0v2" />
+      </svg>
+      <span class="nav__cart-count" id="cartCount">0</span>
+    </button>
+
+    <button class="nav__burger" id="burgerBtn" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ─── Hero ────────────────────────────────────── -->
+  <header id="top" class="hero">
+    <canvas id="heroCanvas" class="hero__canvas"></canvas>
+
+    <div class="hero__grid"></div>
+
+    <div class="hero__copy">
+      <div class="hero__eyebrow">
+        <span class="dot"></span>
+        <span>Est. 2016 · Bangalore · India</span>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="line"><em>Design</em></span>
+        <span class="line">to</span>
+        <span class="line"><em>Delivery.</em></span>
+      </h1>
+
+      <p class="hero__lede">
+        A denim studio engineering end-to-end supply-chain solutions for retail apparel
+        brands across India and overseas — from first sketch to the bulk pallet.
+      </p>
+
+      <div class="hero__cta">
+        <a href="#collection" class="btn btn--primary" data-cursor="hover">
+          <span>Explore the Collection</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a href="#about" class="btn btn--ghost" data-cursor="hover">Our Story</a>
+      </div>
+    </div>
+
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="num">50K</span>
+        <span class="lbl">In-house pcs / month</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="num">150K</span>
+        <span class="lbl">Outsourced capacity</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="num">95%</span>
+        <span class="lbl">On-Time-In-Full</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="num">30</span>
+        <span class="lbl">Certified factories</span>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- ─── Marquee ─────────────────────────────────── -->
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Denim Studio</span><span class="marquee__star">✦</span>
+      <span>Bangalore</span><span class="marquee__star">✦</span>
+      <span>Crocker Jeans Paris</span><span class="marquee__star">✦</span>
+      <span>Candiani Italy</span><span class="marquee__star">✦</span>
+      <span>Jeanologia</span><span class="marquee__star">✦</span>
+      <span>Garmon Italy</span><span class="marquee__star">✦</span>
+      <span>Denim Studio</span><span class="marquee__star">✦</span>
+      <span>Bangalore</span><span class="marquee__star">✦</span>
+      <span>Crocker Jeans Paris</span><span class="marquee__star">✦</span>
+      <span>Candiani Italy</span><span class="marquee__star">✦</span>
+      <span>Jeanologia</span><span class="marquee__star">✦</span>
+      <span>Garmon Italy</span><span class="marquee__star">✦</span>
+    </div>
+  </section>
+
+  <!-- ─── Collection ──────────────────────────────── -->
+  <section id="collection" class="collection">
+    <div class="section-head">
+      <div class="section-head__num">01 / Collection</div>
+      <h2 class="section-head__title">
+        Built in <em>indigo,</em><br />finished by hand.
+      </h2>
+      <p class="section-head__lede">
+        From raw selvedge to soft-washed essentials. Pick any piece — every order
+        carries the same 95% OTIF discipline as our bulk programs.
+      </p>
+    </div>
+
+    <div class="collection__filters" id="filters">
+      <button class="chip chip--active" data-filter="all" data-cursor="hover">All</button>
+      <button class="chip" data-filter="denim" data-cursor="hover">Denim</button>
+      <button class="chip" data-filter="tees" data-cursor="hover">Tees</button>
+      <button class="chip" data-filter="polos" data-cursor="hover">Polos</button>
+      <button class="chip" data-filter="sweaters" data-cursor="hover">Sweaters</button>
+      <button class="chip" data-filter="outerwear" data-cursor="hover">Outerwear</button>
+    </div>
+
+    <div class="collection__grid" id="productsGrid">
+      <!-- Cards injected by js/products.js -->
+    </div>
+  </section>
+
+  <!-- ─── About ───────────────────────────────────── -->
+  <section id="about" class="about">
+    <div class="about__inner">
+      <div class="section-head section-head--inline">
+        <div class="section-head__num">02 / About</div>
+        <h2 class="section-head__title">
+          A studio that <em>engineers</em><br />
+          fashion supply chains.
+        </h2>
+      </div>
+
+      <div class="about__body">
+        <p class="about__lead">
+          Ni-Yu Tex International was founded in 2016 as a Bangalore-based denim
+          studio with one mandate: collapse the distance between a tech-pack and a
+          finished pallet. Today our professionally managed team runs end-to-end
+          programs for retail brands in India and across the overseas market.
+        </p>
+
+        <ul class="about__values">
+          <li>
+            <span class="about__values-num">①</span>
+            <h3>Range building &amp; product development</h3>
+            <p>Updated fashion pipelines with real-time forecast inputs from Crocker Jeans Paris.</p>
+          </li>
+          <li>
+            <span class="about__values-num">②</span>
+            <h3>Streamlined PD &amp; sourcing</h3>
+            <p>Internal processes tuned for seamless supply chain solutions and 95% On-Time-In-Full.</p>
+          </li>
+          <li>
+            <span class="about__values-num">③</span>
+            <h3>Commercial value, lower op-cost</h3>
+            <p>Better product sourcing cost and reduced operational overhead, audited every quarter.</p>
+          </li>
+          <li>
+            <span class="about__values-num">④</span>
+            <h3>Re-engineered for productivity</h3>
+            <p>We rework raw material, processes &amp; construction so the same garment costs less to make.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Services / Supply chain ─────────────────── -->
+  <section id="services" class="services">
+    <div class="section-head">
+      <div class="section-head__num">03 / Services</div>
+      <h2 class="section-head__title">
+        End-to-end <em>supply chain.</em>
+      </h2>
+    </div>
+
+    <div class="services__chain">
+      <div class="services__node" style="--i:0">
+        <span class="services__node-num">01</span>
+        <h3>Trusted Vendor Network</h3>
+        <p>Technical, compliant — 30 audited factories with WRAP, BSCI, GOTS, OEKO-TEX, SA 8000, Sedex, BCI &amp; Disney certifications.</p>
+      </div>
+      <div class="services__node" style="--i:1">
+        <span class="services__node-num">02</span>
+        <h3>Product Development</h3>
+        <p>Tech-pack analysis, prototyping and product offering with updated fashion forecast.</p>
+      </div>
+      <div class="services__node" style="--i:2">
+        <span class="services__node-num">03</span>
+        <h3>Pre-Order Support</h3>
+        <p>Cost negotiation, vendor mapping and consolidation across product categories &amp; region.</p>
+      </div>
+      <div class="services__node" style="--i:3">
+        <span class="services__node-num">04</span>
+        <h3>Order Management</h3>
+        <p>Technical assistance and on-time delivery — real-time monitoring of every Time &amp; Action plan.</p>
+      </div>
+      <div class="services__node" style="--i:4">
+        <span class="services__node-num">05</span>
+        <h3>Quality Assurance</h3>
+        <p>Inspections &amp; SOP — delivery only after sign-off by SGS, Intertek, Bureau Veritas, TÜV SÜD or your chosen agency.</p>
+      </div>
+      <div class="services__node" style="--i:5">
+        <span class="services__node-num">06</span>
+        <h3>Logistics</h3>
+        <p>Forwarding, shipping and last-mile coordination from our Bangalore HO to your DC.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Capabilities (denim strength) ───────────── -->
+  <section class="capabilities">
+    <div class="capabilities__split">
+      <div class="capabilities__copy">
+        <div class="section-head__num">04 / Capabilities</div>
+        <h2 class="capabilities__title">
+          Saving <em>95%</em> blue water,<br />without losing the wash.
+        </h2>
+        <p>
+          Our laundry inputs come from Ramdan, Fibro Organic, Jeanologia and Garmon-Italy —
+          enabling us to cut chemical usage and recover almost all process water. Fabric
+          development reaches from Candiani in Italy to every leading mill in India.
+        </p>
+        <p>
+          Compatibility runs both ways: we can serve a low MOQ of <strong>500 pcs / wash optic</strong>
+          for sampling waves and scale to <strong>150,000 pcs / month</strong> with our dedicated
+          outsourced facilities.
+        </p>
+
+        <div class="capabilities__stats">
+          <div>
+            <span class="num">500</span>
+            <span class="lbl">Min Order Qty<br/>per wash optic</span>
+          </div>
+          <div>
+            <span class="num">50K</span>
+            <span class="lbl">In-house pcs<br/>per month</span>
+          </div>
+          <div>
+            <span class="num">150K</span>
+            <span class="lbl">Outsourced<br/>monthly capacity</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="capabilities__visual">
+        <div class="capabilities__chip">Crocker Jeans · Paris</div>
+        <div class="capabilities__chip">Candiani · Italy</div>
+        <div class="capabilities__chip">Jeanologia</div>
+        <div class="capabilities__chip">Garmon · Italy</div>
+        <div class="capabilities__chip">Ramdan</div>
+        <div class="capabilities__chip">Fibro Organic</div>
+        <div class="capabilities__weave"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Clients ─────────────────────────────────── -->
+  <section id="clients" class="clients">
+    <div class="section-head">
+      <div class="section-head__num">05 / Clients</div>
+      <h2 class="section-head__title">
+        On the racks of the <em>brands you know.</em>
+      </h2>
+    </div>
+
+    <div class="clients__group">
+      <h3 class="clients__group-title">India · Retail</h3>
+      <div class="clients__grid">
+        <div class="client">Pepe Jeans London</div>
+        <div class="client">Park Avenue</div>
+        <div class="client">Monte Carlo</div>
+        <div class="client">Classic Polo</div>
+        <div class="client">FCUK</div>
+        <div class="client">Myntra</div>
+        <div class="client">Derby Jeans</div>
+        <div class="client">Celio</div>
+        <div class="client">Bewakoof</div>
+        <div class="client">Sting</div>
+        <div class="client">One Friday</div>
+      </div>
+    </div>
+
+    <div class="clients__group">
+      <h3 class="clients__group-title">Overseas</h3>
+      <div class="clients__grid">
+        <div class="client">Slate &amp; Stone</div>
+        <div class="client">Clique</div>
+        <div class="client">VTG 1946</div>
+        <div class="client">Cotton &amp; Co</div>
+        <div class="client">Joe&rsquo;s</div>
+        <div class="client">Challenger Teamwear</div>
+        <div class="client">Meijer</div>
+        <div class="client">CKR Paris</div>
+        <div class="client">Basic Box</div>
+        <div class="client">Miracle</div>
+        <div class="client">Taco Bell</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Contact / Footer ────────────────────────── -->
+  <section id="contact" class="contact">
+    <div class="contact__inner">
+      <div class="section-head__num">06 / Contact</div>
+      <h2 class="contact__title">
+        Let&rsquo;s build a <em>program</em> together.
+      </h2>
+
+      <div class="contact__lead">
+        <div>
+          <p class="contact__label">Director</p>
+          <p class="contact__name">Sundhar Mohandoss</p>
+          <p class="contact__line"><a href="tel:+919902010608">+91 99020 10608</a></p>
+          <p class="contact__line"><a href="mailto:director@niyutex.com">director@niyutex.com</a></p>
+        </div>
+
+        <a class="btn btn--primary contact__cta" href="mailto:director@niyutex.com" data-cursor="hover">
+          <span>Start a brief</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="contact__addresses">
+        <div class="contact__addr">
+          <h4>Head Office</h4>
+          <p>No. 402/C, 1st Floor<br/>Sri Chakra Building<br/>4th Cross, East N.G.E.F. Layout<br/>Ramamurthy Nagar (Opp D-Mart)<br/>Bangalore 560016 · Karnataka · India</p>
+        </div>
+        <div class="contact__addr">
+          <h4>USA Office</h4>
+          <p>Ni-Yu Tex LLC<br/>13758 Gabriel Dr.<br/>Frisco, Texas 75035<br/>United States</p>
+        </div>
+        <div class="contact__addr">
+          <h4>Denim Factory</h4>
+          <p>Arya Clothing — Unit 1<br/>10/1, Teagachaguppe<br/>Ramaiahnapalya, Gollahalli Post<br/>Kengeri Hobli<br/>Bangalore 560074 · Karnataka</p>
+        </div>
+        <div class="contact__addr">
+          <h4>Knits Branch</h4>
+          <p>Ni-Yu Tex Fashions<br/>#10, Vivid Garden, Near Kannan Kattage<br/>Amaravathipalayam, Muthananpalayam Village<br/>Dharapuram Road<br/>Tirupur 641606</p>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>© <span id="year"></span> Ni-Yu Tex International. Design to Delivery.</p>
+        <p class="footer__small">Built with Three.js. Hand-stitched in Bangalore.</p>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ─── Cart Drawer ─────────────────────────────── -->
+  <aside class="cart" id="cartDrawer" aria-hidden="true">
+    <div class="cart__head">
+      <h3>Your cart</h3>
+      <button id="cartClose" class="cart__close" aria-label="Close cart" data-cursor="hover">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+      </button>
+    </div>
+    <div class="cart__body" id="cartBody">
+      <p class="cart__empty">Your cart is empty.<br/><span>Add a piece from the collection above.</span></p>
+    </div>
+    <div class="cart__foot">
+      <div class="cart__row">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">₹ 0</span>
+      </div>
+      <button class="btn btn--primary cart__checkout" id="checkoutBtn" data-cursor="hover" disabled>
+        <span>Checkout</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+      <p class="cart__note">Demo checkout — no payment is taken.</p>
+    </div>
+  </aside>
+  <div class="cart__backdrop" id="cartBackdrop"></div>
+
+  <!-- ─── Checkout success modal ──────────────────── -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__card">
+      <div class="modal__check">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+      </div>
+      <h3>Order received.</h3>
+      <p>Thanks for the demo order. A real Ni-Yu Tex sales rep would now reach out at <strong>director@niyutex.com</strong> to confirm the wash optic, MOQ and ship date.</p>
+      <button class="btn btn--ghost" id="modalClose" data-cursor="hover">Continue</button>
+    </div>
+  </div>
+
+  <!-- ─── Three.js ────────────────────────────────── -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="js/scene.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
