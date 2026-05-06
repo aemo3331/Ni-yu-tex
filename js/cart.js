@@ -16,21 +16,33 @@ function saveCart () {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch {}
 }
 
-function add (product) {
-  const existing = cart.find(c => c.id === product.id);
-  if (existing) existing.qty += 1;
-  else cart.push({
-    id: product.id,
-    name: product.name,
-    sub: product.sub,
-    price: product.price,
-    cat: product.cat,
-    tone: product.tone,
-    qty: 1
-  });
-  saveCart();
-  render();
-  openDrawer();
+async function add (product) {
+    // Check current stock from the server
+    const response = await fetch(`http://localhost:5000/api/products/${product.id}`);
+    const serverProduct = await response.json();
+    
+    if (serverProduct.stock <= 0) {
+        alert('Sorry, this item is out of stock!');
+        return;
+    }
+    
+    const existing = cart.find(c => c.id === product.id);
+    const newQty = existing ? existing.qty + 1 : 1;
+    
+    if (newQty > serverProduct.stock) {
+        alert(`Only ${serverProduct.stock} items available in stock.`);
+        return;
+    }
+    
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({ ...product, qty: 1 });
+    }
+    
+    saveCart();
+    render();
+    openDrawer();
 }
 
 function remove (id) {

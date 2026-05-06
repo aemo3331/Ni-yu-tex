@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Inventory | Ni-Yu Tex</title>
+    <style>
+        body { font-family: sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+        h1, h2 { color: #0b0d14; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; padding: 20px; background: #f9f9f9; border-radius: 8px; }
+        form input, form select, form button { padding: 10px; font-size: 16px; }
+        form button { grid-column: span 2; background: #0b0d14; color: white; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #0b0d14; color: white; }
+        .delete-btn, .edit-btn { padding: 5px 10px; margin: 0 5px; cursor: pointer; border: none; border-radius: 4px; }
+        .delete-btn { background: #c75a3b; color: white; }
+        .edit-btn { background: #4d6db4; color: white; }
+        .low-stock { color: #c75a3b; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Inventory Management System</h1>
+    <h2>Add / Update Product</h2>
+    <form id="productForm">
+        <input type="text" id="name" placeholder="Product Name" required>
+        <select id="category" required>
+            <option value="denim">Denim</option>
+            <option value="tees">Tees</option>
+            <option value="polos">Polos</option>
+            <option value="sweaters">Sweaters</option>
+            <option value="outerwear">Outerwear</option>
+        </select>
+        <input type="text" id="sub" placeholder="Subtitle / Description">
+        <input type="number" id="price" placeholder="Price (₹)" required>
+        <input type="number" id="stock" placeholder="Stock Quantity" required>
+        <input type="file" id="image" accept="image/*">
+        <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Current Products</h2>
+    <div style="overflow-x: auto;">
+        <table id="productsTable">
+            <thead>
+                <tr><th>ID</th><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="productsList"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:5000/api';
+
+    // Fetch and render all products
+    async function loadProducts() {
+        const res = await fetch(`${API_URL}/products`);
+        const products = await res.json();
+        const tbody = document.getElementById('productsList');
+        tbody.innerHTML = '';
+        products.forEach(p => {
+            const row = tbody.insertRow();
+            row.insertCell(0).textContent = p.id;
+            row.insertCell(1).innerHTML = p.image ? `<img src="${p.image}" width="50">` : '-';
+            row.insertCell(2).textContent = p.name;
+            row.insertCell(3).textContent = p.category;
+            row.insertCell(4).textContent = `₹ ${p.price}`;
+            const stockCell = row.insertCell(5);
+            stockCell.textContent = p.stock;
+            if (p.stock < 10) stockCell.className = 'low-stock';
+            const actionsCell = row.insertCell(6);
+            actionsCell.innerHTML = `
+                <button class="edit-btn" onclick="editProduct(${p.id}, ${p.price}, ${p.stock})">Edit Price/Stock</button>
+                <button class="delete-btn" onclick="deleteProduct(${p.id})">Delete</button>
+            `;
+        });
+    }
+
+    // Add new product
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('category', document.getElementById('category').value);
+        formData.append('sub', document.getElementById('sub').value);
+        formData.append('price', document.getElementById('price').value);
+        formData.append('stock', document.getElementById('stock').value);
+        const imageFile = document.getElementById('image').files[0];
+        if (imageFile) formData.append('image', imageFile);
+
+        const res = await fetch(`${API_URL}/products`, { method: 'POST', body: formData });
+        if (res.ok) {
+            alert('Product added!');
+            loadProducts();
+            document.getElementById('productForm').reset();
+        } else {
+            alert('Error adding product');
+        }
+    });
+
+    // Delete product
+    window.deleteProduct = async (id) => {
+        if (confirm('Delete this product permanently?')) {
+            const res = await fetch(`${API_URL}/products/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                alert('Product deleted');
+                loadProducts();
+            } else {
+                alert('Error deleting product');
+            }
+        }
+    };
+
+    // Edit price/stock
+    window.editProduct = async (id, currentPrice, currentStock) => {
+        const newPrice = prompt('Enter new price (₹):', currentPrice);
+        const newStock = prompt('Enter new stock quantity:', currentStock);
+        if (newPrice !== null && newStock !== null) {
+            const res = await fetch(`${API_URL}/products/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ price: parseFloat(newPrice), stock: parseInt(newStock) })
+            });
+            if (res.ok) {
+                alert('Product updated');
+                loadProducts();
+            } else {
+                alert('Error updating product');
+            }
+        }
+    };
+
+    loadProducts();
+</script>
+</body>
+</html>
