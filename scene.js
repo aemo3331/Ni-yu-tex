@@ -19,7 +19,7 @@ function initScene() {
   const camera = new THREE.PerspectiveCamera(
     42, window.innerWidth / window.innerHeight, 0.1, 100
   );
-  camera.position.set(0, 0, 9);
+  camera.position.set(0, 0, 6);
 
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true, alpha: true, powerPreference: 'high-performance'
@@ -49,8 +49,8 @@ function initScene() {
   const modelGroup = new THREE.Group();
   scene.add(modelGroup);
 
-  modelGroup.position.y = -0.2;
-  modelGroup.scale.set(0.8, 0.8, 0.8);
+  modelGroup.position.y = -0.5;
+  modelGroup.scale.set(2.5, 2.5, 2.5);
 
   const loader = new GLTFLoader();
   loader.load('/models/model.glb',
