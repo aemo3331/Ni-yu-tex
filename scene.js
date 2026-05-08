@@ -1,10 +1,11 @@
 /* ===================================================================
    Hero Three.js Scene
-   A drifting, rotating denim "garment" sculpture with depth-of-field
+   A drifting, rotating mannequin model with depth-of-field
    particle field. Reacts to pointer movement and scroll.
    =================================================================== */
 
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const canvas = document.getElementById('heroCanvas');
 if (canvas) initScene();
@@ -44,83 +45,34 @@ function initScene() {
   fillLight.position.set(0, -3, 4);
   scene.add(fillLight);
 
-  /* ---------- the denim "garment" form ----------
-     We build a stylized jean shape from a Shape with two legs,
-     extrude it, and apply a subtle warped denim-blue material.
-     A second flowing TorusKnot floats around it as accent.
-  ---------------------------------------------------------- */
+  /* ---------- New Mannequin Model ---------- */
+  const modelGroup = new THREE.Group();
+  scene.add(modelGroup);
 
-  const garmentGroup = new THREE.Group();
-  scene.add(garmentGroup);
+  modelGroup.position.y = -0.2;
+  modelGroup.scale.set(0.8, 0.8, 0.8);
 
-  // Build the silhouette of a pair of jeans (front view)
-  const jeansShape = new THREE.Shape();
-  jeansShape.moveTo(-1.2, 1.5);            // top-left waist
-  jeansShape.bezierCurveTo(-1.3, 1.3, -1.3, 1.15, -1.25, 1);   // hip
-  jeansShape.lineTo(-1.05, -2.2);          // outer left leg
-  jeansShape.bezierCurveTo(-1.1, -2.6, -0.9, -2.65, -0.8, -2.6); // ankle
-  jeansShape.lineTo(-0.4, -2.55);          // bottom seam left
-  jeansShape.lineTo(-0.25, -0.1);          // inseam
-  jeansShape.lineTo(0, 0.4);
-  jeansShape.lineTo(0.25, -0.1);
-  jeansShape.lineTo(0.4, -2.55);           // bottom seam right
-  jeansShape.lineTo(0.8, -2.6);
-  jeansShape.bezierCurveTo(0.9, -2.65, 1.1, -2.6, 1.05, -2.2);
-  jeansShape.lineTo(1.25, 1);
-  jeansShape.bezierCurveTo(1.3, 1.15, 1.3, 1.3, 1.2, 1.5);
-  jeansShape.lineTo(-1.2, 1.5);
-
-  const jeansGeometry = new THREE.ExtrudeGeometry(jeansShape, {
-    depth: 0.18,
-    bevelEnabled: true,
-    bevelThickness: 0.05,
-    bevelSize: 0.05,
-    bevelSegments: 4,
-    curveSegments: 32,
-  });
-  jeansGeometry.center();
-
-  // Procedural denim-ish material via canvas texture
-  const denimTex = makeDenimTexture();
-  denimTex.wrapS = denimTex.wrapT = THREE.RepeatWrapping;
-  denimTex.repeat.set(2, 3);
-
-  const jeansMat = new THREE.MeshStandardMaterial({
-    color: 0x87ceeb,
-    roughness: 0.78,
-    metalness: 0.06,
-    map: denimTex,
-    bumpMap: denimTex,
-    bumpScale: 0.04,
-  });
-
-  const jeans = new THREE.Mesh(jeansGeometry, jeansMat);
-  jeans.scale.setScalar(1.2);
-  garmentGroup.add(jeans);
-
-  // Wireframe ghost, gives a "tech-pack" feel
-  const wireGeo = new THREE.EdgesGeometry(jeansGeometry, 25);
-  const wireMat = new THREE.LineBasicMaterial({
-    color: 0xb0e4f5, transparent: true, opacity: 0.35
-  });
-  const wire = new THREE.LineSegments(wireGeo, wireMat);
-  wire.scale.copy(jeans.scale).multiplyScalar(1.005);
-  garmentGroup.add(wire);
-
-  // Floating accent ring – represents the supply-chain loop
-  const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(2.6, 0.012, 16, 200),
-    new THREE.MeshBasicMaterial({ color: 0xede4d3, transparent: true, opacity: 0.22 })
+  const loader = new GLTFLoader();
+  loader.load('/models/model.glb',
+    (gltf) => {
+      const mannequin = gltf.scene;
+      mannequin.position.set(0, 0, 0);
+      mannequin.rotation.y = 0;
+      mannequin.traverse((child) => {
+        if (child.isMesh && child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach(mat => mat.color.setHex(0x87ceeb));
+          } else {
+            child.material.color.setHex(0x87ceeb);
+          }
+        }
+      });
+      modelGroup.add(mannequin);
+      console.log('✅ Mannequin loaded');
+    },
+    (xhr) => console.log(`Loading model: ${(xhr.loaded / xhr.total * 100)}%`),
+    (error) => console.error('❌ Error loading model:', error)
   );
-  ring.rotation.x = Math.PI / 2.4;
-  garmentGroup.add(ring);
-
-  const ring2 = ring.clone();
-  ring2.scale.setScalar(1.18);
-  ring2.rotation.x = Math.PI / 1.7;
-  ring2.material = ring.material.clone();
-  ring2.material.opacity = 0.12;
-  garmentGroup.add(ring2);
 
   /* ---------- particle field ---------- */
   const particleCount = 1400;
@@ -179,15 +131,11 @@ function initScene() {
     pointer.x += (pointer.tx - pointer.x) * 0.04;
     pointer.y += (pointer.ty - pointer.y) * 0.04;
 
-    // garment slow rotation + pointer parallax
-    garmentGroup.rotation.y = Math.sin(t * 0.25) * 0.5 + pointer.x * 0.4;
-    garmentGroup.rotation.x = Math.sin(t * 0.18) * 0.18 + pointer.y * 0.18;
-    garmentGroup.rotation.z = Math.sin(t * 0.12) * 0.06;
-    garmentGroup.position.y = Math.sin(t * 0.6) * 0.12 - scrollY * 0.001;
-
-    // rings counter-rotate
-    ring.rotation.z = t * 0.18;
-    ring2.rotation.z = -t * 0.13;
+    // model slow rotation + pointer parallax
+    modelGroup.rotation.y = Math.sin(t * 0.25) * 0.5 + pointer.x * 0.4;
+    modelGroup.rotation.x = Math.sin(t * 0.18) * 0.18 + pointer.y * 0.18;
+    modelGroup.rotation.z = Math.sin(t * 0.12) * 0.06;
+    modelGroup.position.y = Math.sin(t * 0.6) * 0.12 - scrollY * 0.001;
 
     // particles drift
     particles.rotation.y = t * 0.012;
@@ -201,41 +149,4 @@ function initScene() {
     requestAnimationFrame(tick);
   }
   tick();
-}
-
-/* ---------- procedural denim canvas texture ---------- */
-function makeDenimTexture() {
-  const size = 256;
-  const c = document.createElement('canvas');
-  c.width = c.height = size;
-  const ctx = c.getContext('2d');
-
-  // base indigo
-  ctx.fillStyle = '#87ceeb';
-  ctx.fillRect(0, 0, size, size);
-
-  // warp + weft fibres
-  for (let i = 0; i < 4500; i++) {
-    const x = Math.random() * size;
-    const y = Math.random() * size;
-    const isWarp = Math.random() > 0.5;
-    const len = 1 + Math.random() * 3;
-    const shade = Math.random();
-    ctx.fillStyle = shade < 0.5
-      ? `rgba(100,180,220,${0.25 + Math.random() * 0.4})`
-      : `rgba(200,235,255,${0.05 + Math.random() * 0.18})`;
-    if (isWarp) ctx.fillRect(x, y, 1, len);
-    else ctx.fillRect(x, y, len, 1);
-  }
-
-  // fade highlights to suggest a wash
-  const grad = ctx.createRadialGradient(size * 0.35, size * 0.4, 10, size * 0.5, size * 0.5, size * 0.7);
-  grad.addColorStop(0, 'rgba(180,200,235,0.18)');
-  grad.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, size, size);
-
-  const tex = new THREE.CanvasTexture(c);
-  tex.anisotropy = 8;
-  return tex;
 }
