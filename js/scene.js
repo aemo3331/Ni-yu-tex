@@ -5,11 +5,12 @@
    =================================================================== */
 
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const canvas = document.getElementById('heroCanvas');
 if (canvas) initScene();
 
-function initScene () {
+function initScene() {
 
   /* ---------- core ---------- */
   const scene = new THREE.Scene();
@@ -128,7 +129,7 @@ function initScene () {
   const sizes = new Float32Array(particleCount);
 
   for (let i = 0; i < particleCount; i++) {
-    positions[i * 3]     = (Math.random() - 0.5) * 26;
+    positions[i * 3] = (Math.random() - 0.5) * 26;
     positions[i * 3 + 1] = (Math.random() - 0.5) * 16;
     positions[i * 3 + 2] = (Math.random() - 0.5) * 18;
     sizes[i] = Math.random() * 1.6 + 0.4;
@@ -172,7 +173,7 @@ function initScene () {
   /* ---------- loop ---------- */
   const clock = new THREE.Clock();
 
-  function tick () {
+  function tick() {
     const t = clock.getElapsedTime();
 
     // ease pointer
@@ -186,8 +187,8 @@ function initScene () {
     garmentGroup.position.y = Math.sin(t * 0.6) * 0.12 - scrollY * 0.001;
 
     // rings counter-rotate
-    ring.rotation.z   = t * 0.18;
-    ring2.rotation.z  = -t * 0.13;
+    ring.rotation.z = t * 0.18;
+    ring2.rotation.z = -t * 0.13;
 
     // particles drift
     particles.rotation.y = t * 0.012;
@@ -204,7 +205,7 @@ function initScene () {
 }
 
 /* ---------- procedural denim canvas texture ---------- */
-function makeDenimTexture () {
+function makeDenimTexture() {
   const size = 256;
   const c = document.createElement('canvas');
   c.width = c.height = size;
@@ -222,14 +223,14 @@ function makeDenimTexture () {
     const len = 1 + Math.random() * 3;
     const shade = Math.random();
     ctx.fillStyle = shade < 0.5
-      ? `rgba(20,30,55,${0.25 + Math.random()*0.4})`
-      : `rgba(150,170,210,${0.05 + Math.random()*0.18})`;
+      ? `rgba(20,30,55,${0.25 + Math.random() * 0.4})`
+      : `rgba(150,170,210,${0.05 + Math.random() * 0.18})`;
     if (isWarp) ctx.fillRect(x, y, 1, len);
-    else        ctx.fillRect(x, y, len, 1);
+    else ctx.fillRect(x, y, len, 1);
   }
 
   // fade highlights to suggest a wash
-  const grad = ctx.createRadialGradient(size*0.35, size*0.4, 10, size*0.5, size*0.5, size*0.7);
+  const grad = ctx.createRadialGradient(size * 0.35, size * 0.4, 10, size * 0.5, size * 0.5, size * 0.7);
   grad.addColorStop(0, 'rgba(180,200,235,0.18)');
   grad.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = grad;
